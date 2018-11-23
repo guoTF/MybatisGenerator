@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seda.core.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.seda.core.model.Order" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="supply_id" property="supplyId" jdbcType="BIGINT" />
+    <result column="ord_coful_nm" property="ordCofulNm" jdbcType="VARCHAR" />
+    <result column="ord_dat" property="ordDat" jdbcType="VARCHAR" />
+    <result column="ord_no" property="ordNo" jdbcType="VARCHAR" />
+    <result column="tamt" property="tamt" jdbcType="DECIMAL" />
+    <result column="create_by" property="createBy" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, supply_id, ord_coful_nm, ord_dat, ord_no, tamt, create_by, create_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.seda.core.model.OrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.seda.core.model.OrderExample" >
+    delete from order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.seda.core.model.Order" >
+    insert into order (id, supply_id, ord_coful_nm, 
+      ord_dat, ord_no, tamt, 
+      create_by, create_date)
+    values (#{id,jdbcType=BIGINT}, #{supplyId,jdbcType=BIGINT}, #{ordCofulNm,jdbcType=VARCHAR}, 
+      #{ordDat,jdbcType=VARCHAR}, #{ordNo,jdbcType=VARCHAR}, #{tamt,jdbcType=DECIMAL}, 
+      #{createBy,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.seda.core.model.Order" >
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="supplyId != null" >
+        supply_id,
+      </if>
+      <if test="ordCofulNm != null" >
+        ord_coful_nm,
+      </if>
+      <if test="ordDat != null" >
+        ord_dat,
+      </if>
+      <if test="ordNo != null" >
+        ord_no,
+      </if>
+      <if test="tamt != null" >
+        tamt,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="supplyId != null" >
+        #{supplyId,jdbcType=BIGINT},
+      </if>
+      <if test="ordCofulNm != null" >
+        #{ordCofulNm,jdbcType=VARCHAR},
+      </if>
+      <if test="ordDat != null" >
+        #{ordDat,jdbcType=VARCHAR},
+      </if>
+      <if test="ordNo != null" >
+        #{ordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tamt != null" >
+        #{tamt,jdbcType=DECIMAL},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.seda.core.model.OrderExample" resultType="java.lang.Integer" >
+    select count(*) from order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.supplyId != null" >
+        supply_id = #{record.supplyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ordCofulNm != null" >
+        ord_coful_nm = #{record.ordCofulNm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordDat != null" >
+        ord_dat = #{record.ordDat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordNo != null" >
+        ord_no = #{record.ordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tamt != null" >
+        tamt = #{record.tamt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order
+    set id = #{record.id,jdbcType=BIGINT},
+      supply_id = #{record.supplyId,jdbcType=BIGINT},
+      ord_coful_nm = #{record.ordCofulNm,jdbcType=VARCHAR},
+      ord_dat = #{record.ordDat,jdbcType=VARCHAR},
+      ord_no = #{record.ordNo,jdbcType=VARCHAR},
+      tamt = #{record.tamt,jdbcType=DECIMAL},
+      create_by = #{record.createBy,jdbcType=BIGINT},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seda.core.model.Order" >
+    update order
+    <set >
+      <if test="supplyId != null" >
+        supply_id = #{supplyId,jdbcType=BIGINT},
+      </if>
+      <if test="ordCofulNm != null" >
+        ord_coful_nm = #{ordCofulNm,jdbcType=VARCHAR},
+      </if>
+      <if test="ordDat != null" >
+        ord_dat = #{ordDat,jdbcType=VARCHAR},
+      </if>
+      <if test="ordNo != null" >
+        ord_no = #{ordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tamt != null" >
+        tamt = #{tamt,jdbcType=DECIMAL},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seda.core.model.Order" >
+    update order
+    set supply_id = #{supplyId,jdbcType=BIGINT},
+      ord_coful_nm = #{ordCofulNm,jdbcType=VARCHAR},
+      ord_dat = #{ordDat,jdbcType=VARCHAR},
+      ord_no = #{ordNo,jdbcType=VARCHAR},
+      tamt = #{tamt,jdbcType=DECIMAL},
+      create_by = #{createBy,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
