@@ -23,6 +23,7 @@ public class MyGenerator {
 		try {
 			MyGenerator myGenerator = new MyGenerator();
 			myGenerator.generate();
+			System.out.println("OK");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
